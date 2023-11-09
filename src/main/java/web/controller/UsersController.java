@@ -17,7 +17,6 @@ public class UsersController {
     @Autowired
     public UsersController(UserService userService) {
         this.userService = userService;
-        System.out.println("test");
     }
 
     @GetMapping(value = "/")
@@ -37,28 +36,27 @@ public class UsersController {
         if (bindingResult.hasErrors()) {
             return "/new";
         }
-        userService.saveUser(user.getName(), user.getSurname(), user.getAge());
+        userService.saveUser(user);
         return "redirect:/";
     }
 
     @GetMapping(value = "/edit")
-    public String editPage(@RequestParam("id") int id, ModelMap model) {
+    public String editPage(@RequestParam("id") long id, ModelMap model) {
         model.addAttribute("user", userService.showId(id));
         return "/edit";
     }
 
     @PostMapping("/edit")
-    public String editUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                           @RequestParam("id") int id) {
+    public String editUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/edit";
         }
-        userService.editUser(id, user);
+        userService.editUser(user);
         return "redirect:/";
     }
 
     @PostMapping ("/delete")
-    public String deleteUser(@RequestParam("id") int id) {
+    public String deleteUser(@RequestParam("id") long id) {
         userService.removeUser(id);
         return "redirect:/";
     }

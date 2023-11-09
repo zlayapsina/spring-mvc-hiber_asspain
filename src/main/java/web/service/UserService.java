@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface UserService {
     List<User> getUsers();
-    void saveUser(String name, String surname, int age);
-    void removeUser(int id);
-    void editUser(int id, User user);
-    User showId(int id);
+    void saveUser(User user);
+    void removeUser(long id);
+    void editUser(User user);
+    User showId(long id);
 }
